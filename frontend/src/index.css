@@ -1,0 +1,408 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-dark-900: 13 14 26;
+  --color-dark-800: 18 19 31;
+  --color-dark-700: 24 25 38;
+  --color-dark-600: 30 32 46;
+  --color-dark-500: 37 38 56;
+  --color-dark-400: 45 47 69;
+  --color-dark-300: 58 61 85;
+}
+
+html.light {
+  --color-dark-900: 243 244 246;
+  --color-dark-800: 255 255 255;
+  --color-dark-700: 249 250 251;
+  --color-dark-600: 229 231 235;
+  --color-dark-500: 243 244 246;
+  --color-dark-400: 229 231 235;
+  --color-dark-300: 209 213 219;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: rgb(var(--color-dark-900));
+    color: #e2e4f0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3a3d55;
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4f54e8;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-dark-700/60 backdrop-blur-xl border border-white/5;
+  }
+
+  .glass-card {
+    @apply bg-dark-600/80 backdrop-blur-xl border border-white/5 rounded-2xl;
+  }
+
+  .btn-primary {
+    @apply bg-brand-600 hover:bg-brand-500 text-white font-semibold px-5 py-2.5 rounded-xl
+           transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-brand-500/50;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-400 hover:bg-dark-300 text-gray-200 font-medium px-5 py-2.5 rounded-xl
+           transition-all duration-200 active:scale-95 disabled:opacity-50
+           border border-white/5 focus:outline-none focus:ring-2 focus:ring-white/10;
+  }
+
+  .btn-danger {
+    @apply bg-red-500/20 hover:bg-red-500/30 text-red-400 font-medium px-4 py-2 rounded-xl
+           transition-all duration-200 active:scale-95 border border-red-500/20
+           focus:outline-none focus:ring-2 focus:ring-red-500/30;
+  }
+
+  .btn-success {
+    @apply bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 font-medium px-4 py-2 rounded-xl
+           transition-all duration-200 active:scale-95 border border-emerald-500/20
+           focus:outline-none focus:ring-2 focus:ring-emerald-500/30;
+  }
+
+  .input-field {
+    @apply w-full bg-dark-500/80 border border-white/5 text-gray-100 placeholder-gray-500
+           rounded-xl px-4 py-3 text-sm transition-all duration-200 outline-none
+           focus:border-brand-500/60 focus:bg-dark-500 focus:ring-1 focus:ring-brand-500/30;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer
+           transition-all duration-150 hover:bg-dark-400/60;
+  }
+
+  .sidebar-item.active {
+    @apply bg-brand-600/20 text-brand-300;
+  }
+
+  .message-bubble-sent {
+    @apply bg-gradient-to-br from-brand-600 to-brand-700 text-white rounded-2xl rounded-br-sm
+           px-4 py-2.5 max-w-xs lg:max-w-sm break-words shadow-lg shadow-brand-900/30;
+  }
+
+  .message-bubble-received {
+    @apply bg-dark-400 text-gray-100 rounded-2xl rounded-bl-sm
+           px-4 py-2.5 max-w-xs lg:max-w-sm break-words;
+  }
+
+  .avatar {
+    @apply rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center font-bold text-white flex-shrink-0;
+  }
+
+  .online-dot {
+    @apply absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-dark-800;
+  }
+
+  .unread-badge {
+    @apply bg-brand-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5;
+  }
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #6270f3 0%, #a78bfa 50%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient border */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(98,112,243,0.5), rgba(168,139,250,0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Noise texture overlay */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+  border-radius: inherit;
+}
+
+/* Typing indicator dots */
+.typing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6270f3;
+  animation: bounceDot 1.4s infinite ease-in-out;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ======================================================== */
+/* THEME OVERRIDES (LIGHT & DARK MODES)                     */
+/* ======================================================== */
+
+/* --- 1. LIGHT THEME OVERRIDES --- */
+html.light,
+html.light body,
+html.light #root {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light .bg-dark-900 {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-dark-800 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-dark-700 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-dark-600 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-dark-500,
+html.light [class*="bg-dark-500"] {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .bg-dark-400,
+html.light [class*="bg-dark-400"] {
+  background-color: #e2e8f0 !important;
+}
+
+/* Light Mode Text */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-gray-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-gray-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-gray-300 {
+  color: #334155 !important;
+}
+
+html.light .text-gray-400 {
+  color: #475569 !important;
+}
+
+html.light .text-gray-500 {
+  color: #64748b !important;
+}
+
+html.light .text-gray-600 {
+  color: #64748b !important;
+}
+
+html.light .text-gray-700 {
+  color: #94a3b8 !important;
+}
+
+/* Retain pure white text for brand buttons, badges, avatar, and sent bubbles */
+html.light .btn-primary,
+html.light .btn-primary *,
+html.light .message-bubble-sent,
+html.light .message-bubble-sent *,
+html.light .avatar,
+html.light .avatar *,
+html.light .unread-badge,
+html.light .unread-badge *,
+html.light .btn-danger,
+html.light .btn-danger *,
+html.light .btn-success,
+html.light .btn-success *,
+html.light [class*="bg-brand-600"],
+html.light [class*="bg-brand-600"] * {
+  color: #ffffff !important;
+}
+
+/* Light Theme Borders */
+html.light .border-white\/5,
+html.light .border-white\/10 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.07) !important;
+}
+
+html.light .hover\:bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light Theme Message Bubbles */
+html.light .message-bubble-received {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Light Theme Cards & Containers */
+html.light .glass-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .glass {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Light Theme Inputs */
+html.light .input-field,
+html.light textarea#message-input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+html.light .input-field:focus,
+html.light textarea#message-input:focus {
+  background-color: #ffffff !important;
+  border-color: #6270f3 !important;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* --- 2. DARK THEME EXPLICIT GUARANTEES --- */
+html.dark,
+html:not(.light) {
+  background-color: #0d0e1a;
+  color: #e2e4f0;
+}
+
+html.dark body,
+html:not(.light) body {
+  background-color: #0d0e1a !important;
+  color: #e2e4f0 !important;
+}
+
+html.dark .text-white,
+html:not(.light) .text-white {
+  color: #ffffff !important;
+}
+
+html.dark .text-gray-100,
+html:not(.light) .text-gray-100 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-gray-200,
+html:not(.light) .text-gray-200 {
+  color: #e2e4f0 !important;
+}
+
+html.dark .text-gray-300,
+html:not(.light) .text-gray-300 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-gray-400,
+html:not(.light) .text-gray-400 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-gray-500,
+html:not(.light) .text-gray-500 {
+  color: #64748b !important;
+}
+
+html.dark .bg-dark-900,
+html:not(.light) .bg-dark-900 {
+  background-color: #0d0e1a !important;
+}
+
+html.dark .bg-dark-800,
+html:not(.light) .bg-dark-800 {
+  background-color: #12131f !important;
+}
+
+html.dark .bg-dark-700,
+html:not(.light) .bg-dark-700 {
+  background-color: #181926 !important;
+}
+
+html.dark .bg-dark-600,
+html:not(.light) .bg-dark-600 {
+  background-color: #1e202e !important;
+}
+
+html.dark .bg-dark-500,
+html:not(.light) .bg-dark-500 {
+  background-color: #252638 !important;
+}
+
+html.dark .bg-dark-400,
+html:not(.light) .bg-dark-400 {
+  background-color: #2d2f45 !important;
+}
